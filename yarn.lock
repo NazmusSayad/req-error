@@ -124,11 +124,6 @@ rechoir@^0.6.2:
   dependencies:
     resolve "^1.1.6"
 
-req-error@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/req-error/-/req-error-1.0.1.tgz#457b582da30eba95ee4caf53a3c0f0d63f633b02"
-  integrity sha512-JoCFRD/IKs+6aYVblX9Gt88DH3NG6NPkqg2sG/9FfimnwcpQbAKMtFHoQDyhxoq7bYFo8Ff6ysVABtJXSN2oyw==
-
 resolve@^1.1.6:
   version "1.22.1"
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.1.tgz#27cb2ebb53f91abb49470a928bba7558066ac177"

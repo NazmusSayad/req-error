@@ -3,19 +3,19 @@ interface ObjectFunction {
 }
 
 class ReqError extends Error {
-  static #catchArgumentError = new Error('Catch needs at least 1 argument')
-  static #wrapperInputError = new Error('Catch can only use functions')
+  static catch<CatchType extends Function[] | Function[][] | ObjectFunction[]>(
+    ...args: CatchType
+  ): CatchType extends [any] ? CatchType[0] : CatchType {
+    if (args.length === 0) {
+      throw new Error('Catch needs at least 1 argument')
+    }
 
-  static catch(
-    ...args: [Function] | Function[] | Function[][] | ObjectFunction[]
-  ) {
-    if (args.length === 0) throw this.#catchArgumentError
     return args.length === 1
       ? this.#catch(args[0])
-      : [...args].map((input) => this.#catch(input))
+      : args.map((input) => this.#catch(input))
   }
 
-  static #catch(input: Function | Function[] | ObjectFunction) {
+  static #catch(input: Function[] | ObjectFunction | Function) {
     if (input instanceof Array) return input.map((fn) => this.#wrapper(fn))
 
     if (input.toString() === '[object Object]') {
@@ -31,7 +31,9 @@ class ReqError extends Error {
   }
 
   static #wrapper = (fn: Function | any) => {
-    if (!(fn instanceof Function)) throw this.#wrapperInputError
+    if (!(fn instanceof Function)) {
+      throw new Error('Catch can only use functions')
+    }
 
     return (req: any, res: any, next: Function | any) => {
       try {
