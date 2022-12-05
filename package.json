@@ -1,0 +1,33 @@
+{
+  "name": "req-error",
+  "version": "1.0.1",
+  "description": "",
+  "main": "./dist-mjs/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npm-ez dev",
+    "build": "npm-ez build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NazmusSayad/req-error.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NazmusSayad/req-error/issues"
+  },
+  "homepage": "https://github.com/NazmusSayad/req-error#readme",
+  "devDependencies": {
+    "npm-ez": "^0.0.18",
+    "typescript": "^4.9.3"
+  },
+  "types": "./dist-mjs/index.d.js",
+  "exports": {
+    ".": {
+      "require": "./dist-cjs/index.js",
+      "import": "./dist-mjs/index.js"
+    }
+  }
+}
