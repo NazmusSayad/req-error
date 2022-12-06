@@ -1,6 +1,9 @@
-interface ObjectFunction {
-  [index: string]: Function
-}
+type InputType =
+  | Function
+  | Function[]
+  | {
+      [index: string]: Function
+    }
 
 const wrapper = (fn: Function | any) => {
   if (!(fn instanceof Function)) {
@@ -17,7 +20,7 @@ const wrapper = (fn: Function | any) => {
   }
 }
 
-const catchErrorCore = (input: Function | Function[] | ObjectFunction) => {
+const catchErrorCore = (input: InputType) => {
   if (input instanceof Array) return input.map((fn) => wrapper(fn))
 
   if (input.toString() === '[object Object]') {
@@ -32,9 +35,7 @@ const catchErrorCore = (input: Function | Function[] | ObjectFunction) => {
   return wrapper(input)
 }
 
-const catchError = <
-  CatchType extends (Function | Function[] | ObjectFunction)[]
->(
+const catchError = <CatchType extends InputType[]>(
   ...args: CatchType
 ): CatchType extends [any] ? CatchType[0] : CatchType => {
   if (args.length === 0) {
