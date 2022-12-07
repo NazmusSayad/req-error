@@ -6,9 +6,7 @@ type InputType =
     }
 
 const wrapper = (fn: Function | any) => {
-  if (!(fn instanceof Function)) {
-    throw new Error('Catch can only use functions')
-  }
+  if (!(fn instanceof Function)) return fn
 
   return (req: any, res: any, next: Function | any) => {
     try {

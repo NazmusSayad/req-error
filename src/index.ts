@@ -1,5 +1,6 @@
-import catchError from './catchError.js'
 import ReqError from './ReqError.js'
+import catchError from './catchError.js'
+import handleError from './handleError.js'
 
-export { catchError }
-export default ReqError
+export { catchError, handleError }
+module.exports = ReqError
