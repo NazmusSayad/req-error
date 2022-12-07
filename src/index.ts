@@ -3,4 +3,4 @@ import catchError from './catchError.js'
 import handleError from './handleError.js'
 
 export { catchError, handleError }
-module.exports = ReqError
+export default ReqError
