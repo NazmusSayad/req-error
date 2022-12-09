@@ -4,8 +4,10 @@ This package makes catch async & custom error concepts in express easier.
 
 ## Features
 
+- TypeScript full support
 - Custom Error with message and statusCode
-- Error catcher function with a gear durablity
+- Error catcher function with a geart durablity
+- Error handler with common situations
 
 <a href="https://npmjs.com/package/req-error">
   <img src="https://img.shields.io/npm/v/req-error" alt="npm package"> 
@@ -33,11 +35,7 @@ yarn add req-error
 pnpm add req-error
 ```
 
-<br/>
-
----
-
-<br/>
+<br/> <br/>
 
 # Express
 
@@ -45,34 +43,40 @@ Configure your application with whatever configuration you want.
 
 ## Basic Usage:
 
+`/* app.js */`
+
 ```js
-/* app.js */
-
 const express = require('express')
+const { handleError } = require('req-error')
 const app = express()
-// Use your app
-app.use((req, res, next, err) => {
-  if (err.isOperational) {
-    return res.status(err.statusCode).json({ message: err.message })
-  }
 
-  res.status(500).json({ message: 'Internal server error' })
-})
+// Use your app...
+
+handleError(app)
+```
+
+<br />
+
+`/* controller.js */`
+
+```js
+// Make ReqError global (Recommended)
+require('req-error/global')
+const { catchError } = require('req-error')
+
+// Not Global (Not Recommended)
+const { default: ReqError, catchError } = require('req-error')
 ```
 
 ```js
-/* controller.js */
-
-const { default: ReqError, catchError } = require('req-error')
-
-catchError((req, res) => {
+const login = catchError((req, res) => {
   // Do your stuff...
   throw new ReqError('This is just a demo', 400)
 })
 
-catchError(async (req, res) => {
+const signup = catchError(async (req, res) => {
   // Do your stuff...
-  throw new ReqError('This is just a demo', 400)
+  throw new ReqError('This is just another demo', 401)
 })
 ```
 
@@ -82,13 +86,26 @@ catchError(async (req, res) => {
 
 <br/>
 
-## Advanced Usage:
+### Some possible usages of `ReqError`:
 
 ```js
-const { catchError } = require('req-error')
-const controllers = catchError(require('./controller.js'))
-// Now just simply use your controllers...
+new ReqError('Message', 404)
+// { message: "Message", statusCode: 404 }
+
+new ReqError(['Message', 404])
+// { message: "Message", statusCode: 404 }
+
+new ReqError({ message: 'Message', statusCode: 404 })
+// { message: "Message", statusCode: 404 }
+
+new ReqError(['Message', 404], 500)
+// { message: "Message", statusCode: 500 }
+
+new ReqError({ message: 'Message', statusCode: 404 }, 500)
+// { message: "Message", statusCode: 500 }
 ```
+
+<br />
 
 ### Some possible usages of `catchError`:
 
@@ -97,6 +114,9 @@ const controllers = catchError(require('./controller.js'))
 
 catchError(Function)
 // Function
+
+catchError(Function, String)
+// [Function, String]
 
 catchError(Function, Function, Function)
 // [Function, Function, Function]
@@ -122,43 +142,67 @@ catchError(Function, [Function, Function], { login: Function })
 
 <br />
 
-**Every input must be an object{} or array[] or function.**
-
-- If input is an **array** then all the elements must be **function**
-- if input is an **object** then all values must be **function**.
-
-<br />
- 
- 
-### Wrong usages of `catchError`:
+### Some possible usages of `handleError`:
 
 ```js
-catchError()
+const errorMessages = {}
 
-catchError('string')
+const formatJSON = (error, statusCode) => {
+  // If NODE_ENV === 'development'
+  // error = {
+  //   message: 'Invalid auth token',
+  //   error: Error,
+  //   stack: Error.stack,
+  // }
+  //
+  // Else:
+  // error = {
+  //   message: 'Invalid auth token',
+  // }
 
-catchError('string', 0)
+  return {
+    status: statusCode < 500 ? 'fail' : 'error',
+    ...error,
+  }
+}
 
-catchError([0])
-
-catchError([0], 'string')
-
-catchError([0], 'string', { login: 9 })
-
-catchError([0], 'string', { login: true })
-
-catchError([0], 'string', { login: true }, { signup: 'string' })
+handleError(app, errorMessages, formatJSON)
 ```
 
-<br/>
+<br />
 
 ---
 
 <br/>
 
+## Exports
+
+```js
+// Path: .
+
+export default ReqError
+export {
+  catchError,
+  handleError,
+
+  // Types
+  FormatJSON,
+  CatchInput,
+  MessageInput,
+  ErrorMessages,
+}
+
+// Path: ./global
+global.ReqError = ReqError
+```
+
+## <br/>
+
+<br/>
+
 ## **Note:**
 
-- This is perfectly compitable with `commonjs` module system but also works with esm without any problem.
+- This is perfectly compitable with `commonjs` module system but also works with esm without any problem also written in esm.
 
 <br/>
 

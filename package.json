@@ -1,6 +1,6 @@
 {
   "name": "req-error",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "",
   "main": "./dist-mjs/index.js",
   "scripts": {
@@ -32,6 +32,10 @@
     ".": {
       "require": "./dist-cjs/index.js",
       "import": "./dist-mjs/index.js"
+    },
+    "./global": {
+      "require": "./dist-cjs/global.js",
+      "import": "./dist-mjs/global.js"
     }
   },
   "dependencies": {}

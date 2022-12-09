@@ -1,4 +1,4 @@
-type InputType =
+export type CatchInput =
   | Function
   | Function[]
   | {
@@ -18,7 +18,7 @@ const wrapper = (fn: Function | any) => {
   }
 }
 
-const catchErrorCore = (input: InputType) => {
+const catchErrorCore = (input: CatchInput) => {
   if (input instanceof Array) return input.map((fn) => wrapper(fn))
 
   if (input.toString() === '[object Object]') {
@@ -33,7 +33,7 @@ const catchErrorCore = (input: InputType) => {
   return wrapper(input)
 }
 
-const catchError = <CatchType extends InputType[]>(
+const catchError = <CatchType extends CatchInput[]>(
   ...args: CatchType
 ): CatchType extends [any] ? CatchType[0] : CatchType => {
   if (args.length === 0) {

@@ -1,39 +1,37 @@
+export type MessageInput =
+  | string
+  | [string]
+  | [string, number]
+  | { message: string; statusCode?: number }
+
 class ReqError extends Error {
   name: string = 'RequestError'
   statusCode?: number
   isOperational: boolean = true
 
-  constructor(
-    messageOrArray:
-      | string
-      | [string]
-      | [string, number]
-      | { message: string; statusCode?: number },
-    statusCodeOrUndefined?: number
-  ) {
-    let message = messageOrArray
-    let statusCode = statusCodeOrUndefined
+  constructor(message: MessageInput, statusCode?: number) {
+    let finalMessage = message
+    let finalStatusCode = statusCode
 
-    if (messageOrArray instanceof Array) {
-      message = messageOrArray[0]
-      statusCode ??= messageOrArray[1]
-    } else if (messageOrArray.toString() === '[object Object]') {
+    if (message instanceof Array) {
+      finalMessage = message[0]
+      finalStatusCode ??= message[1]
+    } else if (message?.toString() === '[object Object]') {
       // @ts-ignore
-      message = messageOrArray.message
+      finalMessage = message.message
       // @ts-ignore
-      statusCode ??= messageOrArray.statusCode
+      finalStatusCode ??= message.statusCode
     }
 
-    if (typeof message !== 'string') {
+    if (typeof finalMessage !== 'string') {
       throw new Error('RequestError constructor gets invalid message')
     }
-    if (statusCode != undefined && typeof statusCode !== 'number') {
+    if (finalStatusCode != undefined && typeof finalStatusCode !== 'number') {
       throw new Error('RequestError constructor gets invalid statusCode')
     }
 
-    super(message)
-    this.statusCode = statusCode
-
+    super(finalMessage)
+    this.statusCode = finalStatusCode
     // @ts-ignore
     Error.captureStackTrace(this, this.constructor)
   }

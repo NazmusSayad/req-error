@@ -1,18 +1,32 @@
 import getErrorInfo, { errorMessages } from './scripts/getErrorInfo'
 import ReqError from './ReqError'
+import { Express, Request, Response, NextFunction } from 'express'
+
+export type ErrorMessageOptional = Partial<typeof errorMessages>
+
+export type FormatJSON = (
+  error: {
+    message: string | string[]
+    error?: Error
+    stack?: any
+  },
+  statusCode: number
+) => {
+  [index: string]: any
+}
 
 export default (
-  app: any,
-  errorMsgs?: typeof errorMessages,
-  formatJson?: Function
+  app: Express,
+  errorMsgs?: ErrorMessageOptional,
+  formatJson?: FormatJSON
 ) => {
   if (errorMsgs) Object.assign(errorMessages, errorMsgs)
 
-  app.use((req: any, res: any, next: Function) => {
+  app.use((req: Request, res: Response, next: NextFunction) => {
     next(new ReqError(errorMessages.notFound))
   })
 
-  app.use((err: Error, req: any, res: any, next: Function) => {
+  app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     const [message, statusCode = errorMessages.statusCode] = getErrorInfo(err)
 
     const resObj: any = { message }
@@ -26,7 +40,7 @@ export default (
 
     res.status(statusCode).json(
       formatJson
-        ? formatJson(resObj)
+        ? formatJson(resObj, statusCode)
         : {
             status: statusCode < 500 ? 'fail' : 'error',
             ...resObj,
