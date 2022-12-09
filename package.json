@@ -1,6 +1,6 @@
 {
   "name": "req-error",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "",
   "scripts": {
     "dev": "npm-ez dev",
@@ -27,21 +27,38 @@
     "express": "*"
   },
   "main": "./dist-cjs/index.js",
-  "types": "./dist-cjs/index.d.js",
+  "types": "./dist-cjs/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist-cjs/index.js",
-      "import": "./dist-mjs/index.js"
+      "require": {
+        "types": "./dist-cjs/index.d.ts",
+        "default": "./dist-cjs/index.js"
+      },
+      "import": {
+        "types": "./dist-mjs/index.d.ts",
+        "default": "./dist-mjs/index.js"
+      }
     },
     "./global": {
-      "require": "./dist-cjs/global.js",
-      "import": "./dist-mjs/global.js"
+      "require": {
+        "types": "./dist-cjs/global.d.ts",
+        "default": "./dist-cjs/global.js"
+      },
+      "import": {
+        "types": "./dist-mjs/global.d.ts",
+        "default": "./dist-mjs/global.js"
+      }
     }
   },
   "typesVersions": {
     "*": {
-      "*": [
-        "./dist-cjs/*"
+      ".": [
+        "./dist-cjs/index.d.ts",
+        "./dist-mjs/index.d.ts"
+      ],
+      "global": [
+        "./dist-cjs/global.d.ts",
+        "./dist-mjs/global.d.ts"
       ]
     }
   }
