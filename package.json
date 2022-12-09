@@ -2,7 +2,6 @@
   "name": "req-error",
   "version": "1.0.9",
   "description": "",
-  "main": "./dist-mjs/index.js",
   "scripts": {
     "dev": "npm-ez dev",
     "build": "npm-ez build"
@@ -27,7 +26,8 @@
   "peerDependencies": {
     "express": "*"
   },
-  "types": "./dist-mjs/index.d.js",
+  "main": "./dist-cjs/index.js",
+  "types": "./dist-cjs/index.d.js",
   "exports": {
     ".": {
       "require": "./dist-cjs/index.js",
@@ -38,5 +38,11 @@
       "import": "./dist-mjs/global.js"
     }
   },
-  "dependencies": {}
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist-cjs/*"
+      ]
+    }
+  }
 }
