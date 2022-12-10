@@ -5,5 +5,3 @@
 !dist-mjs/**
 !package.json
 !README.md
-
-!/index.d.ts

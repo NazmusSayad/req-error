@@ -1,6 +1,6 @@
 {
   "name": "req-error",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "",
   "scripts": {
     "dev": "npm-ez dev",
@@ -17,7 +17,7 @@
   },
   "main": "./dist-cjs/index.js",
   "module": "./dist-mjs/index.js",
-  "types": "./index.d.ts",
+  "types": "./dist-cjs/index.d.ts",
   "exports": {
     ".": {
       "require": "./dist-cjs/index.js",
