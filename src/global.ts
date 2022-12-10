@@ -6,4 +6,10 @@ declare global {
   }
 }
 
-global.ReqError = ReqError
+try {
+  globalThis.ReqError = ReqError
+} catch {
+  global.ReqError = ReqError
+}
+
+export default ReqError

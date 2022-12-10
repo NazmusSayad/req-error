@@ -1,22 +1,11 @@
 {
   "name": "req-error",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "",
   "scripts": {
     "dev": "npm-ez dev",
     "build": "npm-ez build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/NazmusSayad/req-error.git"
-  },
-  "keywords": [],
-  "author": "NazmusSayad",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/NazmusSayad/req-error/issues"
-  },
-  "homepage": "https://github.com/NazmusSayad/req-error#readme",
   "devDependencies": {
     "npm-ez": "latest",
     "typescript": "latest",
@@ -27,27 +16,16 @@
     "express": "*"
   },
   "main": "./dist-cjs/index.js",
-  "types": "./dist-cjs/index.d.ts",
+  "module": "./dist-mjs/index.js",
+  "types": "./index.d.ts",
   "exports": {
     ".": {
-      "require": {
-        "types": "./dist-cjs/index.d.ts",
-        "default": "./dist-cjs/index.js"
-      },
-      "import": {
-        "types": "./dist-mjs/index.d.ts",
-        "default": "./dist-mjs/index.js"
-      }
+      "require": "./dist-cjs/index.js",
+      "import": "./dist-mjs/index.js"
     },
     "./global": {
-      "require": {
-        "types": "./dist-cjs/global.d.ts",
-        "default": "./dist-cjs/global.js"
-      },
-      "import": {
-        "types": "./dist-mjs/global.d.ts",
-        "default": "./dist-mjs/global.js"
-      }
+      "require": "./dist-cjs/global.js",
+      "import": "./dist-mjs/global.js"
     }
   },
   "typesVersions": {
@@ -61,5 +39,16 @@
         "./dist-mjs/global.d.ts"
       ]
     }
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NazmusSayad/req-error.git"
+  },
+  "keywords": [],
+  "author": "NazmusSayad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NazmusSayad/req-error/issues"
+  },
+  "homepage": "https://github.com/NazmusSayad/req-error#readme"
 }
