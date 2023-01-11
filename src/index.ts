@@ -15,9 +15,3 @@ export {
   MessageInput,
   ErrorMessages,
 }
-
-declare global {
-  var ReqError: {
-    new (message: MessageInput, statusCode?: number): ReqError
-  }
-}

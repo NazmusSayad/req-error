@@ -1,6 +1,6 @@
 {
   "name": "req-error",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "",
   "scripts": {
     "dev": "npm-ez dev",
@@ -24,9 +24,15 @@
       "import": "./dist-mjs/index.mjs"
     },
     "./global": {
-      "types": "./dist-cjs/global.d.cts",
       "require": "./dist-cjs/global.cjs",
       "import": "./dist-mjs/global.mjs"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "global": [
+        "./dist-cjs/global.d.cts"
+      ]
     }
   },
   "repository": {
