@@ -103,6 +103,10 @@ new ReqError(['Message', 404], 500)
 
 new ReqError({ message: 'Message', statusCode: 404 }, 500)
 // { message: "Message", statusCode: 500 }
+
+// Even more simple:
+throw 'Error message'
+throw ['Error message', 404]
 ```
 
 <br />

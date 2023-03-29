@@ -1,22 +1,5 @@
-export const errorMessages: {
-  statusCode: number
-  notFound: [string, number]
-  exceptions: [string, number]
-  JSONParse: [string, number]
-  jwtExpire: [string, number]
-  jwtInvalid: [string, number]
-  mongoCast: [string, number]
-  mongoObjParam: [string, number]
-} = {
-  statusCode: 400,
-  notFound: ["Oops, looks like you're lost in space!", 404],
-  exceptions: ['Something went very wrong!', 500],
-  JSONParse: ['Invalid data recieved', 400],
-  jwtExpire: ['Your token is no longer valid', 401],
-  jwtInvalid: ['Login credentials are invalid', 401],
-  mongoCast: ['Invalid input for `{$}`', 400],
-  mongoObjParam: ['Invalid input for `{$}`', 400],
-}
+import errorMessages from './errorMessages'
+import ReqError from './ReqError'
 
 const getInfo = {
   duplicateError: (err: any) => {
@@ -24,7 +7,6 @@ const getInfo = {
   },
 
   validationError: (err: any) => {
-    // @ts-ignore
     const messages = Object.values(err.errors)?.map((er: any) => {
       if (er.name === 'CastError') {
         return errorMessages.mongoCast[0].replace('{$}', er.path)
@@ -45,8 +27,14 @@ const getInfo = {
   },
 }
 
-export default (err: any): [string | string[], number | undefined] => {
-  if (err.isOperational) return [err.message, err.statusCode]
+export default (err: any): [string | string[], number?] => {
+  if (err instanceof ReqError) {
+    return [err.message, err.statusCode]
+  } else if (typeof err === 'string' || err instanceof String) {
+    return [err.toString()]
+  } else if (Array.isArray(err) && err.length > 0) {
+    return [err[0].toString(), err[1] && +err[1]]
+  }
 
   if (err.type === 'entity.parse.failed') {
     return errorMessages.JSONParse
@@ -78,5 +66,3 @@ export default (err: any): [string | string[], number | undefined] => {
 
   return errorMessages.exceptions
 }
-
-

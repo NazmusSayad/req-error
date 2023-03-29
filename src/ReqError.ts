@@ -1,26 +1,22 @@
-export type MessageInput =
-  | string
-  | [string]
-  | [string, number]
-  | { message: string; statusCode?: number }
+import { MessageInput } from './types'
 
 class ReqError extends Error {
   name: string = 'RequestError'
   statusCode?: number
-  isOperational: boolean = true
 
   constructor(message: MessageInput, statusCode?: number) {
     let finalMessage = message
     let finalStatusCode = statusCode
-
-    if (message instanceof Array) {
+    if (Array.isArray(message)) {
       finalMessage = message[0]
       finalStatusCode ??= message[1]
-    } else if (message?.toString() === '[object Object]') {
-      // @ts-ignore
-      finalMessage = message.message
-      // @ts-ignore
-      finalStatusCode ??= message.statusCode
+    }
+
+    if (finalMessage instanceof String) {
+      finalMessage = finalMessage.toString()
+    }
+    if ((finalStatusCode as any) instanceof Number) {
+      finalStatusCode = Number(finalStatusCode)
     }
 
     if (typeof finalMessage !== 'string') {
@@ -32,7 +28,6 @@ class ReqError extends Error {
 
     super(finalMessage)
     this.statusCode = finalStatusCode
-    // @ts-ignore
     Error.captureStackTrace(this, this.constructor)
   }
 }

@@ -1,17 +1,12 @@
-export type CatchInput =
-  | Function
-  | Function[]
-  | {
-      [index: string]: Function
-    }
+import { CatchInput } from './types'
 
 const wrapper = (fn: Function | any) => {
   if (!(fn instanceof Function)) return fn
 
   return (req: any, res: any, next: Function | any) => {
     try {
-      const returnValue = fn(req, res, next)
-      if (returnValue instanceof Promise) returnValue.catch(next)
+      const rv /* Return value */ = fn(req, res, next)
+      if (rv instanceof Promise) rv.catch(next)
     } catch (err) {
       next(err)
     }
@@ -19,21 +14,22 @@ const wrapper = (fn: Function | any) => {
 }
 
 const catchErrorCore = (input: CatchInput) => {
-  if (input instanceof Array) return input.map((fn) => wrapper(fn))
-
-  if (input.toString() === '[object Object]') {
-    const newObj: any = {}
-    for (let key in input) {
-      // @ts-ignore
-      newObj[key] = wrapper(input[key])
-    }
-    return newObj
+  if (typeof input === 'function' || input instanceof Function) {
+    return wrapper(input)
   }
 
-  return wrapper(input)
+  if (input instanceof Array) {
+    return input.map((fn) => wrapper(fn))
+  }
+
+  const output: any = {}
+  for (let key in input) {
+    output[key] = wrapper(input[key])
+  }
+  return output
 }
 
-const catchError = <CatchType extends CatchInput[]>(
+export default <CatchType extends CatchInput[]>(
   ...args: CatchType
 ): CatchType extends [any] ? CatchType[0] : CatchType => {
   if (args.length === 0) {
@@ -44,5 +40,3 @@ const catchError = <CatchType extends CatchInput[]>(
     ? catchErrorCore(args[0])
     : args.map((input) => catchErrorCore(input))
 }
-
-export default catchError

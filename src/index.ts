@@ -1,19 +1,8 @@
-import ReqError, { MessageInput } from './ReqError'
-import catchError, { CatchInput } from './catchError'
-import handleError, {
-  ErrorMessageOptional as ErrorMessages,
-  FormatJSON,
-} from './handleError.js'
-import getErrorInfo from './scripts/getErrorInfo'
+import ReqError from './ReqError'
+import catchError from './catchError'
+import handleError from './handleError'
+import getErrorInfo from './getErrorInfo'
 
+export * from './types'
 export default ReqError
-export {
-  catchError,
-  handleError,
-  getErrorInfo,
-  // Types
-  FormatJSON,
-  CatchInput,
-  MessageInput,
-  ErrorMessages,
-}
+export { catchError, handleError, getErrorInfo }

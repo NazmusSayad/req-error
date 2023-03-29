@@ -1,4 +1,5 @@
-import ReqError, { MessageInput } from './ReqError'
+import ReqError from './ReqError'
+import { MessageInput } from './types'
 
 declare global {
   var ReqError: {
