@@ -95,13 +95,7 @@ new ReqError('Message', 404)
 new ReqError(['Message', 404])
 // { message: "Message", statusCode: 404 }
 
-new ReqError({ message: 'Message', statusCode: 404 })
-// { message: "Message", statusCode: 404 }
-
 new ReqError(['Message', 404], 500)
-// { message: "Message", statusCode: 500 }
-
-new ReqError({ message: 'Message', statusCode: 404 }, 500)
 // { message: "Message", statusCode: 500 }
 
 // Even more simple:
@@ -146,7 +140,7 @@ catchError(Function, [Function, Function], { login: Function })
 
 <br />
 
-### Some possible usages of `handleError`:
+### Some usages of `handleError`:
 
 ```js
 const errorMessages = {}
@@ -183,30 +177,14 @@ handleError(app, errorMessages, formatJSON)
 
 ```js
 // Path: .
-
 export default ReqError
-export {
-  catchError,
-  handleError,
-
-  // Types
-  FormatJSON,
-  CatchInput,
-  MessageInput,
-  ErrorMessages,
-}
+export { catchError, handleError, getErrorInfo }
 
 // Path: ./global
 global.ReqError = ReqError
 ```
 
 ## <br/>
-
-<br/>
-
-## **Note:**
-
-- This is perfectly compitable with `commonjs` module system but also works with esm without any problem also written in esm.
 
 <br/>
 
