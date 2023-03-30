@@ -1,7 +1,7 @@
 import { CatchInput } from './types'
 
 const wrapper = (fn: Function | any) => {
-  if (!(fn instanceof Function)) return fn
+  if (!(typeof input === 'function' || fn instanceof Function)) return fn
 
   return (req: any, res: any, next: Function | any) => {
     try {
