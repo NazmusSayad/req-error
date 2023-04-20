@@ -17,7 +17,9 @@ export default (
 
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     try {
-      const [message, statusCode = errorMessages.statusCode] = getErrorInfo(err)
+      const [message, _statusCode = errorMessages.statusCode] =
+        getErrorInfo(err)
+      const statusCode = res.statusCode < 400 ? _statusCode : res.statusCode
 
       const resObj: any = { message }
       if (process.env.NODE_ENV === 'development') {
