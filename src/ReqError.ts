@@ -1,6 +1,6 @@
 import { MessageInput } from './types'
 
-class ReqError extends Error {
+export default class ReqError extends Error {
   name: string = 'RequestError'
   statusCode?: number
 
@@ -31,5 +31,3 @@ class ReqError extends Error {
     ;(Error as any).captureStackTrace(this, this.constructor)
   }
 }
-
-export default ReqError
