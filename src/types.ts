@@ -1,13 +1,6 @@
-export interface ErrorMessages {
-  statusCode: number
-  notFound: [string, number]
-  exceptions: [string, number]
-  JSONParse: [string, number]
-  jwtExpire: [string, number]
-  jwtInvalid: [string, number]
-  mongoCast: [string, number]
-  mongoObjParam: [string, number]
-}
+import errorMessages from './errorMessages'
+
+type ErrorMessages = typeof errorMessages
 
 export type ErrorMessagesOptional = Partial<ErrorMessages>
 
@@ -30,3 +23,21 @@ export type CatchInput =
     }
 
 export type MessageInput = string | [string, number?]
+
+// CheckType
+
+export type CheckFunction = (object: { [index: string]: unknown }) => void
+
+export interface TypeCheckOptions {
+  type: AllowedTypes
+  required: boolean
+}
+
+export type AllowedTypes =
+  | StringConstructor
+  | NumberConstructor
+  | BooleanConstructor
+  | ArrayConstructor
+  | [StringConstructor]
+  | [NumberConstructor]
+  | [BooleanConstructor]

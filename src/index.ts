@@ -1,8 +1,7 @@
 import ReqError from './ReqError'
-import catchError from './catchError'
-import handleError from './handleError'
+import checkType from './checkType'
 import getErrorInfo from './getErrorInfo'
 
 export * from './types'
 export default ReqError
-export { catchError, handleError, getErrorInfo }
+export { getErrorInfo, checkType }

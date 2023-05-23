@@ -1,3 +1,4 @@
+import { CheckTypeError, CheckTypeRequiredError } from './checkType/TypeError'
 import errorMessages from './errorMessages'
 import ReqError from './ReqError'
 
@@ -28,16 +29,37 @@ const getInfo = {
 }
 
 export default (err: any): [string | string[], number?] => {
-  if (err instanceof ReqError) {
-    return [err.message, err.statusCode]
-  } else if (typeof err === 'string' || err instanceof String) {
+  // Raw Error
+  if (typeof err === 'string' || err instanceof String) {
     return [err.toString()]
   } else if (Array.isArray(err) && err.length > 0) {
     return [err[0].toString(), err[1] && +err[1]]
   }
 
+  if (err instanceof ReqError) {
+    return [err.message, err.statusCode]
+  }
+
+  if (err instanceof CheckTypeError) {
+    return [
+      errorMessages.checkType[0]
+        .replace(/{\$key}/gim, err.key)
+        .replace(/{\$type}/gim, err.type),
+
+      errorMessages.checkType[1],
+    ]
+  }
+
+  if (err instanceof CheckTypeRequiredError) {
+    return [
+      errorMessages.checkRequired[0].replace(/{\$key}/gim, err.key),
+      errorMessages.checkType[1],
+    ]
+  }
+
+  // Random Error
   if (err.type === 'entity.parse.failed') {
-    return errorMessages.JSONParse
+    return [...errorMessages.JSONParse]
   }
 
   if (err.code === 11000) {
@@ -46,10 +68,10 @@ export default (err: any): [string | string[], number?] => {
 
   switch (err.name) {
     case 'JsonWebTokenError':
-      return errorMessages.jwtInvalid
+      return [...errorMessages.jwtInvalid]
 
     case 'TokenExpiredError':
-      return errorMessages.jwtExpire
+      return [...errorMessages.jwtExpire]
 
     case 'ObjectParameterError':
       return [getInfo.objParamError(err), 400]
@@ -64,5 +86,5 @@ export default (err: any): [string | string[], number?] => {
       return [getInfo.validationError(err), 400]
   }
 
-  return errorMessages.exceptions
+  return [...errorMessages.exceptions]
 }

@@ -1,6 +1,4 @@
-import { ErrorMessages } from './types'
-
-const errorMessages: ErrorMessages = {
+const errorMessages = {
   statusCode: 400,
   notFound: ["Oops, looks like you're lost in space!", 404],
   exceptions: ['Something went very wrong!', 500],
@@ -9,6 +7,8 @@ const errorMessages: ErrorMessages = {
   jwtInvalid: ['Login credentials are invalid', 401],
   mongoCast: ['Invalid input for `{$}`', 400],
   mongoObjParam: ['Invalid input for `{$}`', 400],
-}
+  checkType: [`Expected '{$key}' should be '{$type}'`, 400],
+  checkRequired: [`Value for '{$key}' is required`, 400],
+} as const
 
 export default errorMessages
