@@ -1,3 +1,5 @@
+export class NotFoundError extends Error {}
+
 export class CheckTypeError extends Error {
   key
   type

@@ -1,6 +1,6 @@
 import * as utils from '../utils'
 import { TypeCheckOptions } from '../types'
-import { CheckTypeError, CheckTypeRequiredError } from './TypeError'
+import { CheckTypeError, CheckTypeRequiredError } from '../ExtraError'
 interface AnyObject {
   [index: string]: unknown
 }

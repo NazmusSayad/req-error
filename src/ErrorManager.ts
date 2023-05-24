@@ -1,10 +1,17 @@
+import {
+  NotFoundError,
+  CheckTypeError,
+  CheckTypeRequiredError,
+} from './ExtraError'
 import ReqError from './ReqError'
 import errorMessages from './errorMessages'
 import { ErrorMessagesOptional } from './types'
-import { CheckTypeError, CheckTypeRequiredError } from './checkType/TypeError'
 
 export default class ErrorManager {
   #messages = { ...errorMessages }
+  get messages() {
+    return this.#messages
+  }
   constructor(messages?: ErrorMessagesOptional) {
     messages && Object.assign(this.#messages, messages)
   }
@@ -18,6 +25,10 @@ export default class ErrorManager {
 
     if (err instanceof ReqError) {
       return [err.message, err.statusCode]
+    }
+
+    if (err instanceof NotFoundError) {
+      return [...this.#messages.notFound]
     }
 
     if (err instanceof CheckTypeError) {
