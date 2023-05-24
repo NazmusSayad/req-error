@@ -1,7 +1,6 @@
 import ReqError from './ReqError'
 import checkType from './checkType'
-import errorMessages from './errorMessages'
-import getErrorInfo from './getErrorInfo'
+import ErrorManager from './ErrorManager'
 
 export * from './types'
-export { getErrorInfo, checkType, ReqError, errorMessages }
+export { checkType, ReqError, ErrorManager }

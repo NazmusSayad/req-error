@@ -1,7 +1,6 @@
 import errorMessages from './errorMessages'
 
-type ErrorMessages = typeof errorMessages
-
+export type ErrorMessages = typeof errorMessages
 export type ErrorMessagesOptional = Partial<ErrorMessages>
 
 export type FormatJSON = (

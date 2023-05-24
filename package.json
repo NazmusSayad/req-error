@@ -1,10 +1,11 @@
 {
   "name": "req-error-core",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "scripts": {
     "dev": "npm-ez dev",
-    "build": "npm-ez build"
+    "build": "npm-ez build",
+    "test": "node --watch ./dist-cjs"
   },
   "devDependencies": {
     "@types/node": "latest",
