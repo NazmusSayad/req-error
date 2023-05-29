@@ -1,6 +1,6 @@
 {
-  "name": "req-error-core",
-  "version": "0.0.5",
+  "name": "req-error",
+  "version": "1.0.26",
   "description": "",
   "scripts": {
     "dev": "npm-ez dev",
