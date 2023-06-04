@@ -2,10 +2,10 @@ import {
   NotFoundError,
   CheckTypeError,
   CheckTypeRequiredError,
-} from '../../../req-error-core/src/ExtraError'
-import ReqError from '../../../req-error-core/src/ReqError'
-import { as, replacer } from '../../../req-error-core/src/utils'
-import { GetErrorInfoHandler } from '../../../req-error-core/src/types'
+} from '../ExtraError'
+import ReqError from '../ReqError'
+import { as, replacer } from '../utils'
+import { GetErrorInfoHandler } from '../types'
 
 /**
   Add a function to the array, and make your logic
