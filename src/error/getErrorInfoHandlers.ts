@@ -81,6 +81,16 @@ export default as<GetErrorInfoHandler[]>([
     }
   },
 
+  //Prisma Error 
+  function (err) {
+    switch (err.code) {
+         case 'P1012':
+          return replacer(this.prismaDuplicate, '{$key}', err.meta.target.join(', '));
+        case 'P2025':
+          return replacer(this.prismaNotFound, '{$key}', err.meta.target.join(', '));        
+    }
+  },
+
   // ReqError CheckType
   function (err) {
     if (err instanceof CheckTypeError) {
