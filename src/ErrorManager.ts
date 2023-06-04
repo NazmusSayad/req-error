@@ -1,9 +1,9 @@
 import errorMessages from './error/errorMessages'
 import getErrorInfoHandlers from './error/getErrorInfoHandlers'
-import { ErrorMessagesOptional } from './types'
+import { ErrorMessages, ErrorMessagesOptional } from './types'
 
 export default class ErrorManager {
-  #messages = { ...errorMessages }
+  #messages = { ...errorMessages } as ErrorMessages
   get messages() {
     return this.#messages
   }

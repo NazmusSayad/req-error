@@ -1,7 +1,7 @@
 import ErrorManager from './ErrorManager'
 
-const errorManager = new ErrorManager()
-const error: any = new Error("Boom!")
+const errorManager = new ErrorManager({})
+const error: any = new Error('Boom!')
 
 error.code = 'P1012'
 
