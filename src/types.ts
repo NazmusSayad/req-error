@@ -1,4 +1,4 @@
-import errorMessages from './errorMessages'
+import errorMessages from './error/errorMessages'
 
 export type ErrorMessages = typeof errorMessages
 export type ErrorMessagesOptional = Partial<ErrorMessages>
@@ -40,3 +40,7 @@ export type AllowedTypes =
   | [StringConstructor]
   | [NumberConstructor]
   | [BooleanConstructor]
+
+export interface GetErrorInfoHandler {
+  (this: ErrorMessages, err: any): void | [string | string[], number?]
+}

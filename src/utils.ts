@@ -24,3 +24,13 @@ export const isNumber = (value: unknown) => {
 export const isBoolean = (value: unknown) => {
   return typeof value === 'boolean' || value instanceof Boolean
 }
+
+export function replacer<T extends readonly [string, number?]>(
+  msg: T,
+  search: string,
+  value: string
+): [T[0], T[1]] {
+  return [msg[0].replace(search, value), msg[1]]
+}
+
+export const as = <T>(value: T) => value
