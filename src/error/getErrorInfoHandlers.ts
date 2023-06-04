@@ -2,10 +2,10 @@ import {
   NotFoundError,
   CheckTypeError,
   CheckTypeRequiredError,
-} from '../ExtraError'
-import ReqError from '../ReqError'
-import { as, replacer } from '../utils'
-import { GetErrorInfoHandler } from '../types'
+} from '../../../req-error-core/src/ExtraError'
+import ReqError from '../../../req-error-core/src/ReqError'
+import { as, replacer } from '../../../req-error-core/src/utils'
+import { GetErrorInfoHandler } from '../../../req-error-core/src/types'
 
 /**
   Add a function to the array, and make your logic
@@ -93,16 +93,6 @@ export default as<GetErrorInfoHandler[]>([
           })
 
         return [messages, this.mongoCast[1]]
-    }
-  },
-
-  //Prisma Error 
-  function (err) {
-    switch (err.code) {
-         case 'P1012':
-          return replacer(this.prismaDuplicate, '{$key}', err.meta.target.join(', '));
-        case 'P2025':
-          return replacer(this.prismaNotFound, '{$key}', err.meta.target.join(', '));        
     }
   },
 

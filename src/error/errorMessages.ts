@@ -15,10 +15,6 @@ export default {
   mongoCast: ['Invalid input for `{$}`', 400],
   mongoObjParam: ['Invalid input for `{$}`', 400],
 
-  prismaDuplicate : ['Invalid input for `{$}`', 400],
-  prismaNotFound: ['Invalid input for `{$}`', 400],
-
-
   checkType: [`Expected '{$key}' should be '{$type}'`, 400],
   checkRequired: [`Value for '{$key}' is required`, 400],
 } as const
