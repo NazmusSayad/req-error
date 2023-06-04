@@ -6,7 +6,7 @@ import {
 import ReqError from '../ReqError'
 import { as, replacer } from '../utils'
 import { GetErrorInfoHandler } from '../types'
-
+import {PrismaError} from './prismaErrorMessages'
 /**
   Add a function to the array, and make your logic
   Do not forget to return [string, number] or void
@@ -83,12 +83,9 @@ export default as<GetErrorInfoHandler[]>([
 
   //Prisma Error 
   function (err) {
-    switch (err.code) {
-         case 'P1012':
-          return replacer(this.prismaDuplicate, '{$key}', err.meta.target.join(', '));
-        case 'P2025':
-          return replacer(this.prismaNotFound, '{$key}', err.meta.target.join(', '));        
-    }
+     if(PrismaError[err.code]){
+       return [PrismaError[err.code], this.[err.code][1]]
+     }
   },
 
   // ReqError CheckType

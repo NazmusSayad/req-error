@@ -1,3 +1,5 @@
+import  PrismaErrorMessages  from './prismaErrorMessages'
+
 export default {
   statusCode: 400,
   notFound: ["Oops, looks like you're lost in space!", 404],
@@ -16,6 +18,8 @@ export default {
   prismaNotFound: ['Invalid input for `{$}`', 400],
 
 
+  ...PrismaErrorMessages(),
+  
   checkType: [`Expected '{$key}' should be '{$type}'`, 400],
   checkRequired: [`Value for '{$key}' is required`, 400],
 } as const
