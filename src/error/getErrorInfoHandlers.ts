@@ -47,12 +47,27 @@ export default as<GetErrorInfoHandler[]>([
 
   // MongoDuplicateError
   function (err) {
-    if (err.code === 11000) {
-      return replacer(
-        this.duplicate,
-        '{$key}',
-        err.keyValue ? Object.keys(err.keyValue).join(', ') : 'undefined'
-      )
+    switch (err.code) {
+      case 11000:
+        return replacer(
+          this.duplicate,
+          '{$key}',
+          err.keyValue ? Object.keys(err.keyValue).join(', ') : 'undefined'
+        )
+
+      case 'P1012':
+        return replacer(
+          this.prismaDuplicate,
+          '{$key}',
+          err.meta.target.join(', ')
+        )
+
+      case 'P2025':
+        return replacer(
+          this.prismaNotFound,
+          '{$key}',
+          err.meta.target.join(', ')
+        )
     }
   },
 

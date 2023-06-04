@@ -9,6 +9,9 @@ export default {
 
   duplicate: [`The given '{$key}' already exists`, 400],
 
+  prismaDuplicate: [`The given '{$key}' already exists`, 400],
+  prismaNotFound: [`'{$key}' is not found`, 404],
+
   mongoCast: ['Invalid input for `{$}`', 400],
   mongoObjParam: ['Invalid input for `{$}`', 400],
 
