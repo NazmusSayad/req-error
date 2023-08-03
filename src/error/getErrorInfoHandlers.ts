@@ -1,8 +1,3 @@
-import {
-  NotFoundError,
-  CheckTypeError,
-  CheckTypeRequiredError,
-} from '../ExtraError'
 import ReqError from '../ReqError'
 import { as, replacer } from '../utils'
 import { GetErrorInfoHandler } from '../types'
@@ -23,10 +18,6 @@ export default as<GetErrorInfoHandler[]>([
 
     if (err instanceof ReqError) {
       return [err.message, err.statusCode]
-    }
-
-    if (err instanceof NotFoundError) {
-      return [...this.notFound]
     }
 
     if (err.type === 'entity.parse.failed') {
@@ -93,26 +84,6 @@ export default as<GetErrorInfoHandler[]>([
           })
 
         return [messages, this.mongoCast[1]]
-    }
-  },
-
-  // ReqError CheckType
-  function (err) {
-    if (err instanceof CheckTypeError) {
-      return [
-        this.checkType[0]
-          .replace(/{\$key}/gim, err.key)
-          .replace(/{\$type}/gim, err.type),
-
-        this.checkType[1],
-      ]
-    }
-
-    if (err instanceof CheckTypeRequiredError) {
-      return [
-        this.checkRequired[0].replace(/{\$key}/gim, err.key),
-        this.checkType[1],
-      ]
     }
   },
 ])
