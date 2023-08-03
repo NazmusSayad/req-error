@@ -1,6 +1,7 @@
 import ReqError from '../ReqError'
 import { as, replacer } from '../utils'
 import { GetErrorInfoHandler } from '../types'
+import { NotFoundError } from '../ExtraErrors'
 
 /**
   Add a function to the array, and make your logic
@@ -18,6 +19,10 @@ export default as<GetErrorInfoHandler[]>([
 
     if (err instanceof ReqError) {
       return [err.message, err.statusCode]
+    }
+
+    if (err instanceof NotFoundError) {
+      return [...this.notFound]
     }
 
     if (err.type === 'entity.parse.failed') {

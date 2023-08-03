@@ -126,50 +126,6 @@ catchError(Function, [Function, Function], { login: Function })
 
 <br />
 
-### Some usages of `checkType`:
-
-`controller.js`
-
-```ts
-import { checkType } from 'req-error'
-
-const handleSuccess = (req, res) => {
-  res.success({ user: { name: 'John Doe' } })
-}
-
-const handleSomething = (req, res) => {
-  const stringBody = req.getBody('name', 'username', 'imageURL')
-  const numberBody = req.getBody('age', 'rating', 'salary')
-  const booleanBody = req.getBody('isMuslim', 'isLovely')
-  const arrayBody = req.getBody('hobbies', 'children', 'friends')
-  const arrayOfStringBody = req.getBody('hobbies', 'children', 'friends')
-  const arrayOfNumberBody = req.getBody('ageList', 'salaryList')
-  const arrayOfBooleanBody = req.getBody('binary', 'justTrueFalseArray')
-
-  // Basic:
-  checkType.string({ key: 'value', key2: 'value2' })
-
-  // Advanced:
-  checkType.string(stringBody)
-  checkType.number(numberBody)
-  checkType.boolean(booleanBody)
-  checkType.array(arrayBody)
-  checkType.arrayOfString(arrayOfStringBody)
-  checkType.arrayOfNumber(arrayOfNumberBody)
-  checkType.arrayOfBoolean(arrayOfBooleanBody)
-
-  // This just skips type check if the value is undefined
-  checkType.optional.string(stringBody)
-  checkType.optional.number(numberBody)
-  checkType.optional.boolean(booleanBody)
-  checkType.optional.array(arrayBody)
-  checkType.optional.arrayOfString(arrayOfStringBody)
-  checkType.optional.arrayOfNumber(arrayOfNumberBody)
-  checkType.optional.arrayOfBoolean(arrayOfBooleanBody)
-}
-```
-
-<br />
 
 ---
 

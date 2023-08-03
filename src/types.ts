@@ -7,23 +7,17 @@ type TransformedType<T> = {
     : number
 }
 
+// Error Manager
+export type ErrorManagerOptions = {
+  messages?: ErrorMessagesOptional
+  handlers?: GetErrorInfoHandler[]
+}
+
 // Error Messages
 export type ErrorMessages = TransformedType<typeof errorMessages>
 export type ErrorMessagesOptional = Partial<ErrorMessages>
 export interface GetErrorInfoHandler {
   (this: ErrorMessages, err: any): void | [string | string[], number?]
-}
-
-// Root
-export type FormatJSON = (
-  error: {
-    message: string | string[]
-    error?: Error
-    stack?: any
-  },
-  statusCode: number
-) => {
-  [index: string]: any
 }
 
 export type CatchInput =
@@ -34,18 +28,3 @@ export type CatchInput =
     }
 
 export type MessageInput = string | [string, number?]
-
-// CheckType
-export type CheckFunction = (object: { [index: string]: unknown }) => void
-export interface TypeCheckOptions {
-  type: AllowedTypes
-  required: boolean
-}
-export type AllowedTypes =
-  | StringConstructor
-  | NumberConstructor
-  | BooleanConstructor
-  | ArrayConstructor
-  | [StringConstructor]
-  | [NumberConstructor]
-  | [BooleanConstructor]
