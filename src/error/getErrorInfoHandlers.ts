@@ -8,7 +8,6 @@ import { NotFoundError } from '../ExtraErrors'
   Do not forget to return [string, number] or void
   here you will get the error as first param and errorMessages(./errorMessages.ts) as this arg 
 */
-
 export default as<GetErrorInfoHandler[]>([
   function (err) {
     if (typeof err === 'string' || err instanceof String) {
@@ -41,7 +40,7 @@ export default as<GetErrorInfoHandler[]>([
     }
   },
 
-  // MongoDuplicateError
+  // DuplicateError
   function (err) {
     switch (err.code) {
       case 11000:
@@ -55,14 +54,14 @@ export default as<GetErrorInfoHandler[]>([
         return replacer(
           this.prismaDuplicate,
           '{$key}',
-          err.meta.target.join(', ')
+          err.meta.target?.join(', ')
         )
 
       case 'P2025':
         return replacer(
           this.prismaNotFound,
           '{$key}',
-          err.meta.target.join(', ')
+          err.meta.target?.join(', ')
         )
     }
   },

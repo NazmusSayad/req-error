@@ -1,17 +1,14 @@
 {
-	"compilerOptions": {
-		"target": "es6",
-		"moduleResolution": "NodeNext",
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"declaration": true,
-		"experimentalDecorators": true,
-		"inlineSourceMap": false,
-		"strict": true,
-		"pretty": true,
-		"removeComments": true
-	},
-	"include": [
-		"src"
-	]
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "ES6",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "strict": true,
+    "pretty": true,
+    "removeComments": true
+  },
+  "include": ["src"]
 }

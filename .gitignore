@@ -1,16 +1,4 @@
-# Added by npm-ez
-node_modules
-dist-cjs
-dist-mjs
-
-# Added by npm-ez
-node_modules
+# npmize
 dist
-dist-cjs
-dist-mjs
-
-# Added by npm-ez
+.npmize
 node_modules
-dist
-dist-cjs
-dist-mjs
